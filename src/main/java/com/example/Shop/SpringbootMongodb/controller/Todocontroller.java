@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,8 @@ import com.example.Shop.SpringbootMongodb.model.Todo;
 import com.example.Shop.SpringbootMongodb.repositary.TodoRepositary;
 import com.example.Shop.SpringbootMongodb.service.TodoService;
 
+
+@CrossOrigin(origins ="http://localhost:3000/")
 @RestController
 public class Todocontroller {
 
@@ -62,8 +65,8 @@ public class Todocontroller {
 	@PutMapping("/todos/{id}")
 	public ResponseEntity<?> updateById(@PathVariable("id") String id ,@RequestBody Todo todo) {
 		try {
-			todoService.updateTodo(id, todo);
-			return new ResponseEntity<>("Update Todo with id" +id,HttpStatus.OK);
+			todoService.updateTodo(id,todo);
+			return new ResponseEntity<>("Update Todo with id" +id ,HttpStatus.OK);
 			
 		}catch(ConstraintViolationException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
